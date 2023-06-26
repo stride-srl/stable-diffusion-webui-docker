@@ -10,7 +10,7 @@ import sys
 DEFAULT_FILEPATH = '/data/config/auto/config.json'
 
 DEFAULT_OUTDIRS = {
-  "outdir_samples": "",
+  "outdir": "/output",
   "outdir_txt2img_samples": "/output/txt2img",
   "outdir_img2img_samples": "/output/img2img",
   "outdir_extras_samples": "/output/extras",
@@ -18,7 +18,7 @@ DEFAULT_OUTDIRS = {
   "outdir_txt2img_grids": "/output/txt2img-grids",
   "outdir_img2img_grids": "/output/img2img-grids",
   "outdir_save": "/output/saved",
-  "outdir_init_images": "/output/init-images",
+  "outdir_init_images": "/output/init-images"
 }
 RE_VALID_OUTDIR = re.compile(r"(^/output(/\.?[\w\-\_]+)+/?$)|(^\s?$)")
 
