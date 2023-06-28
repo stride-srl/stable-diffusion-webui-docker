@@ -38,8 +38,6 @@ RUN --mount=type=cache,target=/cache --mount=type=cache,target=/root/.cache/pip 
   https://download.pytorch.org/whl/cu118/torch-2.0.1%2Bcu118-cp310-cp310-linux_x86_64.whl && \
   pip install /cache/torch-2.0.1-cp310-cp310-linux_x86_64.whl torchvision --index-url https://download.pytorch.org/whl/cu118
 
-
-
 RUN --mount=type=cache,target=/root/.cache/pip \
   git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git && \
   cd stable-diffusion-webui && \
@@ -78,6 +76,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   git reset --hard ${SHA} && \
   pip install -r requirements_versions.txt
 
+COPY stablediffcustom.sh /stablediffcustom.sh
+RUN . /stablediffcustom.sh
+
 COPY . /docker
 
 RUN \
@@ -86,8 +87,6 @@ RUN \
   # one of the ugliest hacks I ever wrote \
   sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/site-packages/gradio/routes.py && \
   git config --global --add safe.directory '*'
-
-RUN cd ${ROOT}/extensions && git clone https://github.com/stride-srl/sd-webui-deforum.git
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
