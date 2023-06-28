@@ -10,11 +10,11 @@ import sys
 DEFAULT_FILEPATH = '/data/config/auto/config.json'
 
 DEFAULT_OUTDIRS = {
-  "outdir": "/output",
+  "outdir": "/output/images",
   "outdir_txt2img_samples": "/output/txt2img",
   "outdir_img2img_samples": "/output/img2img",
   "outdir_extras_samples": "/output/extras",
-  "outdir_grids": "",
+  "outdir_grids": "/output/grids",
   "outdir_txt2img_grids": "/output/txt2img-grids",
   "outdir_img2img_grids": "/output/img2img-grids",
   "outdir_save": "/output/saved",
