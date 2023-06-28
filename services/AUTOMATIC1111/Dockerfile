@@ -2,6 +2,7 @@ FROM alpine/git:2.36.2 as download
 
 COPY clone.sh /clone.sh
 
+
 RUN . /clone.sh taming-transformers https://github.com/CompVis/taming-transformers.git 24268930bf1dce879235a7fddd0b2355b84d7ea6 \
   && rm -rf data assets **/*.ipynb
 
@@ -50,7 +51,6 @@ RUN --mount=type=cache,target=/root/.cache/pip  \
 
 ENV ROOT=/stable-diffusion-webui
 
-
 COPY --from=download /repositories/ ${ROOT}/repositories/
 RUN mkdir ${ROOT}/interrogate && cp ${ROOT}/repositories/clip-interrogator/data/* ${ROOT}/interrogate
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -76,9 +76,6 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   git reset --hard ${SHA} && \
   pip install -r requirements_versions.txt
 
-COPY stablediffcustom.sh /stablediffcustom.sh
-RUN . /stablediffcustom.sh
-
 COPY . /docker
 
 RUN \
@@ -87,6 +84,9 @@ RUN \
   # one of the ugliest hacks I ever wrote \
   sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/site-packages/gradio/routes.py && \
   git config --global --add safe.directory '*'
+
+COPY clone_extensions.sh /clone_extensions.sh
+RUN  ./clone_extensions.sh sd-webui-deforum https://github.com/stride-srl/sd-webui-deforum develop
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
