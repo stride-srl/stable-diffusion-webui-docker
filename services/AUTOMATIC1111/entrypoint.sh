@@ -56,6 +56,26 @@ echo "Installing extension dependencies (if any)"
 chown -R root ~/.cache/
 chmod 766 ~/.cache/
 
+# if /stable-diffusion-webui/extensions/sd-webui-deforum is not present then create it
+if [ ! -d /stable-diffusion-webui/extensions/sd-webui-deforum ]; then
+  echo "Cloning sd-webui-deforum"
+  mkdir -p /stable-diffusion-webui/extensions/sd-webui-deforum
+  cd /stable-diffusion-webui/extensions/sd-webui-deforum
+  git init
+  git remote add origin https://github.com/stride-srl/sd-webui-deforum
+  git fetch origin
+  git checkout features/apiv2
+  git reset --hard
+else
+  echo "Updating sd-webui-deforum"
+  cd /stable-diffusion-webui/extensions/sd-webui-deforum
+  git fetch origin
+  git reset --hard
+  git pull
+fi
+
+cd -
+
 shopt -s nullglob
 list=(./extensions/*/requirements.txt)
 for req in "${list[@]}"; do
