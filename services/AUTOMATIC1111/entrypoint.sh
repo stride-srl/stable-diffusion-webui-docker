@@ -74,6 +74,23 @@ else
   git pull
 fi
 
+if [ ! -d /stable-diffusion-webui/extensions/sd-webui-controlnet ]; then
+  echo "Cloning sd-webui-controlnet"
+  mkdir -p /stable-diffusion-webui/extensions/sd-webui-controlnet
+  cd /stable-diffusion-webui/extensions/sd-webui-controlnet
+  git init
+  git remote add origin https://github.com/Mikubill/sd-webui-controlnet.git
+  git fetch origin
+  git checkout main
+  git reset --hard
+else
+  echo "Updating sd-webui-controlnet"
+  cd /stable-diffusion-webui/extensions/sd-webui-controlnet
+  git fetch origin
+  git reset --hard
+  git pull
+fi
+
 cd -
 
 shopt -s nullglob
