@@ -74,6 +74,8 @@ else
   git pull
 fi
 
+cd -
+
 if [ ! -d /stable-diffusion-webui/extensions/sd-webui-controlnet ]; then
   echo "Cloning sd-webui-controlnet"
   mkdir -p /stable-diffusion-webui/extensions/sd-webui-controlnet
